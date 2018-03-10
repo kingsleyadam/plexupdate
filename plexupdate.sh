@@ -228,7 +228,7 @@ if [ "${AUTOUPDATE}" = "yes" ]; then
 	elif ! git diff --quiet; then
 		warn "You have made changes to the plexupdate files, cannot auto update"
 	else
-		BRANCHNAME="${BRANCHNAME:-master}"
+		BRANCHNAME="verbose-for-227"
 		if [ "${BRANCHNAME}" != "$(git symbolic-ref -q --short HEAD)" ]; then
 			git checkout "${BRANCHNAME}"
 		fi
