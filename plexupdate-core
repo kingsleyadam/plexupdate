@@ -179,6 +179,7 @@ getLocalSHA() {
 # RNNG
 running() {
 	printf 'Entered running\n'
+	printf 'Connecting to "%b" on port "%b"\n' "$1" "$2"
 	# If a server is unclaimed, it probably doesn't have TLS enabled either
 	local DATA
 	# get Plex sessions
