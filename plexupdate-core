@@ -178,7 +178,7 @@ getLocalSHA() {
 
 # RNNG
 running() {
-	printf 'Entered running'
+	printf 'Entered running\n'
 	# If a server is unclaimed, it probably doesn't have TLS enabled either
 	local DATA
 	# get Plex sessions
@@ -190,10 +190,10 @@ running() {
 	printf 'Second wget returned %b, data is now:\n%b\n\n' "$?" "$DATA"
 
 	if [ ${RET} -eq 6 ]; then
-		printf 'Entering https block'
+		printf 'Entering https block\n'
 		# Server may be claimed, in which case we should use TLS and pass a token
 		getPlexToken
-		[ -n "$TOKEN" ] && printf 'TOKEN is non-zero, continuing'
+		[ -n "$TOKEN" ] && printf 'TOKEN is non-zero, continuing\n'
 		DATA="$(wget --no-check-certificate -q -O - https://$1:$2/status/sessions?X-Plex-Token=$TOKEN)"
 		RET=$?
 		printf 'First https wget returned %b, with data:\n%b\n\n' "$RET" "$DATA"
@@ -205,8 +205,8 @@ running() {
 		# Get a total count of active media (MediaContainer size), then deduct one for every paused stream.
 		# If all streams are paused, we consider the server to not be active.
 		local mediacount
-		mediacount="$(awk -F'"' '/<MediaContainer size="[0-9]+">/ {count+=$2}; /<Player[^>]* state="paused"/ {count--}; END {print count}' <<< ${DATA})" || printf 'mediacount awk call failed'
-		printf 'mediacount is now "%b"' "$mediacount"
+		mediacount="$(awk -F'"' '/<MediaContainer size="[0-9]+">/ {count+=$2}; /<Player[^>]* state="paused"/ {count--}; END {print count}' <<< ${DATA})" || printf 'mediacount awk call failed\n'
+		printf 'mediacount is now "%b\n\n"' "$mediacount"
 		[ $mediacount -gt 0 ] && return 0
 	fi
 
