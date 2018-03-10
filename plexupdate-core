@@ -206,6 +206,7 @@ running() {
 		# Get a total count of active media (MediaContainer size), then deduct one for every paused stream.
 		# If all streams are paused, we consider the server to not be active.
 		local mediacount
+		awk --version
 		mediacount="$(awk -F'"' '/<MediaContainer size="[0-9]+">/ {count+=$2}; /<Player[^>]* state="paused"/ {count--}; END {print count}' <<< ${DATA})" || printf 'mediacount awk call failed\n'
 		printf 'mediacount is now "%b\n\n"' "$mediacount"
 		[ $mediacount -gt 0 ] && return 0
